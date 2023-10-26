@@ -11,7 +11,7 @@ buttonPause.addEventListener("click", () => {
     } else {
         isPaused = true;
         buttonPause.innerText = "Retomar";
-        clearInterval(loopId); 
+        clearInterval(loopId);
     }
 });
 
@@ -30,7 +30,7 @@ let snake = [initialPosition];
 
 const incrementScore = () => {
     score.innerText = +score.innerText + 10;
-}; 
+};
 
 const randomNumber = (min, max) => {
     return Math.round(Math.random() * (max - min) + min);
@@ -42,7 +42,9 @@ const randomPosition = () => {
 };
 
 const foodImages = [
-    new Image(), new Image(), new Image() 
+    new Image(),
+    new Image(),
+    new Image()
 ];
 
 foodImages[0].src = "img1.png";
@@ -50,10 +52,10 @@ foodImages[1].src = "img6.png";
 foodImages[2].src = "img3.png";
 
 const snakeHeadImage = new Image();
-snakeHeadImage.src = "img2.png"; 
+snakeHeadImage.src = "img2.png";
 
 const snakeBodyImage = new Image();
-snakeBodyImage.src = "img3.png"; 
+snakeBodyImage.src = "img3.png";
 
 const snakeBodyImage1 = new Image();
 snakeBodyImage1.src = "img7.png";
@@ -61,23 +63,22 @@ snakeBodyImage1.src = "img7.png";
 const food = {
     x: randomPosition(),
     y: randomPosition(),
-    imageIndex: Math.floor(Math.random() * foodImages.length) 
+    imageIndex: Math.floor(Math.random() * foodImages.length)
 };
 
 let direction, loopId;
 
 const drawFood = () => {
     const { x, y, imageIndex } = food;
-
     ctx.drawImage(foodImages[imageIndex], x, y, size, size);
 };
 
 const drawSnake = () => {
     snake.forEach((position, index) => {
         if (index === snake.length - 1) {
-            ctx.drawImage(snakeHeadImage, position.x, position.y, size, size); 
+            ctx.drawImage(snakeHeadImage, position.x, position.y, size, size);
         } else {
-            ctx.drawImage(snakeBodyImage, position.x, position.y, size, size); 
+            ctx.drawImage(snakeBodyImage, position.x, position.y, size, size);
         }
     });
 };
@@ -113,17 +114,17 @@ const drawGrid = () => {
     for (let i = 30; i < canvas.width; i += 30) {
         ctx.beginPath();
         ctx.lineTo(i, 0);
-        ctx.lineTo(i, 600);
+        ctx.lineTo(i, canvas.height);
         ctx.stroke();
 
         ctx.beginPath();
         ctx.lineTo(0, i);
-        ctx.lineTo(600, i);
+        ctx.lineTo(canvas.width, i);
         ctx.stroke();
     }
 };
 
-const chackEat = () => {
+const checkEat = () => {
     const head = snake[snake.length - 1];
 
     if (head.x === food.x && head.y === food.y) {
@@ -133,9 +134,9 @@ const chackEat = () => {
 
         let x = randomPosition();
         let y = randomPosition();
-        
+
         const newImageIndex = Math.floor(Math.random() * foodImages.length);
-        
+
         while (snake.find((position) => position.x === x && position.y === y)) {
             x = randomPosition();
             y = randomPosition();
@@ -175,12 +176,12 @@ const gameOver = () => {
 const gameLoop = () => {
     clearInterval(loopId);
 
-    ctx.clearRect(0, 0, 600, 600);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawGrid();
     drawFood();
     moveSnake();
     drawSnake();
-    chackEat();
+    checkEat();
     checkCollision();
 
     loopId = setTimeout(() => {
@@ -189,6 +190,7 @@ const gameLoop = () => {
 };
 
 gameLoop();
+
 document.addEventListener("keydown", ({ key }) => {
     if (key === "ArrowRight" && direction !== "left") {
         direction = "right";
@@ -204,6 +206,24 @@ document.addEventListener("keydown", ({ key }) => {
 
     if (key === "ArrowUp" && direction !== "down") {
         direction = "up";
+    }
+});
+
+canvas.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    const touchX = e.changedTouches[0].pageX;
+    const touchY = e.changedTouches[0].pageY;
+    const head = snake[snake.length - 1];
+    const offsetX = touchX - canvas.getBoundingClientRect().left;
+    const offsetY = touchY - canvas.getBoundingClientRect().top;
+
+    const deltaX = offsetX - head.x;
+    const deltaY = offsetY - head.y;
+
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+        direction = deltaX > 0 ? "right" : "left";
+    } else {
+        direction = deltaY > 0 ? "down" : "up";
     }
 });
 
