@@ -47,12 +47,12 @@ const foodImages = [
     new Image()
 ];
 
-foodImages[0].src = "img1.png";
+foodImages[0].src = "img4.png";
 foodImages[1].src = "img6.png";
 foodImages[2].src = "img3.png";
 
 const snakeHeadImage = new Image();
-snakeHeadImage.src = "img2.png";
+snakeHeadImage.src = "img8.png";
 
 const snakeBodyImage = new Image();
 snakeBodyImage.src = "img3.png";
