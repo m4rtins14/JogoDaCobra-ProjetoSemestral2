@@ -6,17 +6,22 @@
 }
 
 body {
-    background-color: #b987ff;
+    background-color: #E0C7BD;
     display: flex;
     min-height: 100vh;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    color: white;
+    color: #DC9F8D;
+}
+
+.snake-grid {
+    background-color: #ffffff;
 }
 
 canvas {
-    background-color: #111;
+    background-color: #000000;
+    image-rendering: pixelated;
 }
 
 .score {
@@ -53,15 +58,15 @@ canvas {
 }
 
 .btn-play,
-.btn-pause{
+.btn-pause {
     border: none;
-    border-radius: 20px; /* Reduzido o border-radius para diminuir o tamanho */
-    padding: 8px 12px; /* Ajustado o padding para um tamanho menor */
-    font-size: 0.8rem; /* Reduzido o tamanho da fonte para se adequar ao botão menor */
+    border-radius: 20px;
+    padding: 8px 12px;
+    font-size: 0.8rem;
     font-weight: 600;
     color: #fff;
-    background-color: #333;
-    margin-top: 10px; /* Diminuído o espaço superior */
+    background-color: #A66454;
+    margin-top: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -70,10 +75,62 @@ canvas {
     text-decoration: none;
     transition: background-color 0.3s;
 }
+
 .btn-play:hover {
-    background-color: #555; 
+    background-color: #000000;
 }
 
 .btn-pause:hover {
-    background-color: darkorchid; 
+    background-color: darkorchid;
+}
+
+.grid {
+    background-color: #A66454;
+}
+
+@media screen and (max-width: 768px) {
+    body {
+        font-size: 16px;
+    }
+
+    .score {
+        font-size: 1.4rem; 
+    }
+
+    .score--value {
+        font-size: 3rem; 
+    }
+
+    .btn-play,
+    .btn-pause {
+        font-size: 0.7rem; 
+        padding: 6px 10px; 
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    body {
+        font-size: 18px; 
+    }
+    
+    .score {
+        font-size: 1.6rem;
+    }
+
+    .score--value {
+        font-size: 3.5rem; 
+    }
+
+    .btn-play,
+    .btn-pause {
+        font-size: 0.9rem; 
+        padding: 7px 11px; 
+    }
+}
+
+@media screen and (min-width: 1025px) {
+    }
+
+canvas {
+    image-rendering: pixelated;
 }
